@@ -1,190 +1,338 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RG.card - Carte Digitale</title>
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            color: white;
-            background: linear-gradient(135deg, #000000, #1c1c1c, #444444, #888888, #000000);
-            background-size: 800% 800%;
-            animation: gradientShift 8s ease infinite;
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            overflow-x: hidden;
-        }
+  <meta charset="UTF-8" />
+  <title>Carte de visite – Raphaël Guiller</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-main: #020617;
+      --bg-card: rgba(15, 23, 42, 0.9);
+      --accent: #0ea5e9;
+      --accent-soft: rgba(14, 165, 233, 0.15);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.2);
+      --radius-xl: 1.75rem;
+    }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .banniere-exemple {
-            width: 100%;
-            background-color: #cc0000;
-            font-size: 0.85rem;
-            font-weight: bold;
-            text-align: center;
-            padding: 6px 10px;
-            letter-spacing: 0.5px;
-            box-sizing: border-box;
-        }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: radial-gradient(circle at top left, #0b1120 0%, #020617 45%, #000000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-        .card {
-            width: 100%;
-            max-width: 450px;
-            padding: 20px 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
+    .card {
+      width: 100%;
+      max-width: 960px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.85));
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      box-shadow:
+        0 30px 80px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.2);
+      padding: 28px 24px;
+      backdrop-filter: blur(18px);
+    }
 
-        .intro, .about {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px 15px;
-            font-size: 1rem;
-            color: #cccccc;
-            margin-bottom: 20px;
-            width: 100%;
-            box-sizing: border-box;
-        }
+    .card-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 28px;
+    }
 
-        h1 a {
-            font-size: 2rem;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-        }
+    @media (max-width: 768px) {
+      .card {
+        padding: 22px 18px;
+        border-radius: 1.4rem;
+      }
 
-        h1 a:hover {
-            text-decoration: underline;
-        }
+      .card-inner {
+        grid-template-columns: 1fr;
+      }
+    }
 
-        .job-title, .company {
-            font-size: 1rem;
-            margin: 5px 0;
-        }
+    .identity {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
 
-        .company {
-            font-weight: bold;
-            color: #bbbbbb;
-            margin-bottom: 20px;
-        }
+    .tagline {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.19em;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      width: fit-content;
+    }
 
-        .buttons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-            width: 100%;
-        }
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.8);
+    }
 
-        .button-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1 1 80px;
-            max-width: 90px;
-        }
+    .name-block {
+      margin-top: 4px;
+    }
 
-        .buttons a {
-            background: white;
-            color: black;
-            width: 60px;
-            height: 60px;
-            font-size: 1.5rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            text-decoration: none;
-        }
+    .name {
+      font-size: 1.65rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
 
-        .button-label {
-            font-size: 0.85rem;
-            margin-top: 5px;
-            color: white;
-            text-align: center;
-        }
+    .name span {
+      color: var(--accent);
+    }
 
-        .bottom-buttons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            width: 100%;
-            margin-top: 10px;
-        }
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
 
-        .bottom-buttons a {
-            color: white;
-            border: 1px solid white;
-            border-radius: 10px;
-            padding: 10px 15px;
-            font-size: 0.9rem;
-            text-decoration: none;
-            flex: 1 1 auto;
-            text-align: center;
-        }
+    .role {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
 
-        .bottom-buttons a:hover {
-            background: white;
-            color: black;
-        }
-    </style>
+    .role strong {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .contact-list {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: var(--text-main);
+    }
+
+    .contact-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: var(--accent);
+    }
+
+    .contact-link {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .contact-link:hover {
+      text-decoration: underline;
+    }
+
+    .actions {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.86rem;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.14s ease-out, box-shadow 0.14s ease-out;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at top left, #38bdf8, #0ea5e9);
+      color: #0b1120;
+      font-weight: 500;
+      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.35);
+    }
+
+    .btn-outline {
+      border-color: var(--border-subtle);
+      background: rgba(15, 23, 42, 0.6);
+      color: var(--text-main);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.8);
+    }
+
+    .map-block {
+      position: relative;
+      padding: 16px;
+      border-radius: calc(var(--radius-xl) - 6px);
+      background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.13), transparent 55%),
+                  radial-gradient(circle at bottom left, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98));
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      overflow: hidden;
+    }
+
+    .map-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .map-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .map-pill {
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .map-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.9);
+    }
+
+    .map-hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .map-outer {
+      margin-top: 6px;
+      border-radius: 1.3rem;
+      overflow: hidden;
+      border: 1px solid rgba(30, 64, 175, 0.8);
+      box-shadow:
+        0 18px 40px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(56, 189, 248, 0.22);
+      animation: floatMap 16s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatMap {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-4px) scale(1.01); }
+    }
+
+    .map-outer iframe {
+      width: 100%;
+      height: 260px;
+      border: 0;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .map-outer iframe { height: 220px; }
+    }
+  </style>
 </head>
 <body>
-
-<div class="banniere-exemple">
-    Cette carte NFC est un exemple et appartient à RG.card. Non destinée à un usage personnel.
-</div>
-
-<div class="card">
-    <div class="intro">
-        Nous configurons et personnalisons vos cartes NFC professionnelles. Après réception de votre lien (site, réseaux, Google…), nous nous occupons de tout : encodage, fabrication et livraison. Simple, rapide et sans application.
-    </div>
-
-    <h1><a href="https://www.instagram.com/rg.card" target="_blank">RG.card</a></h1>
-    <p class="job-title">Solutions NFC professionnelles</p>
-    <div class="company">PAS D'APPLI. PAS DE STRESS. IL SUFFIT DE PASSER.</div>
-
-    <div class="buttons">
-        <div class="button-wrapper">
-            <a href="tel:+33764021268">📞</a>
-            <div class="button-label">Téléphone</div>
+  <main class="card">
+    <div class="card-inner">
+      <!-- Identité -->
+      <section class="identity">
+        <div class="tagline">
+          <span class="tag-dot"></span>
+          Carte de visite digitale
         </div>
-        <div class="button-wrapper">
-            <a href="mailto:rg.businesscard@gmail.com">✉️</a>
-            <div class="button-label">Email</div>
+
+        <div class="name-block">
+          <div class="name">
+            Raphaël <span>Guiller</span>
+          </div>
         </div>
-        <div class="button-wrapper">
-            <a href="https://www.instagram.com/rg.card" target="_blank">📸</a>
-            <div class="button-label">Instagram</div>
+
+        <p class="role">
+          <strong>Contact direct</strong> via téléphone, e-mail ou Instagram.<br>
+          Mini-site pensé pour un accès rapide depuis une carte NFC.
+        </p>
+
+        <div class="contact-list">
+          <div class="contact-item">
+            <div class="contact-icon">☎</div>
+            <a class="contact-link" href="tel:+33764021268">07&nbsp;64&nbsp;02&nbsp;12&nbsp;68</a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">@</div>
+            <a class="contact-link" href="mailto:rg.businesscard@gmail.com">rg.businesscard@gmail.com</a>
+          </div>
         </div>
-    </div>
 
-    <div class="about">
-        <p>Nous proposons des cartes NFC simples, efficaces et sans application. Contactez-nous pour des solutions professionnelles clés en main.</p>
-    </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://www.instagram.com/rg.card" target="_blank" rel="noopener noreferrer">
+            <span>📷</span> Instagram&nbsp;•&nbsp;@rg.card
+          </a>
 
-    <div class="bottom-buttons">
-        <a href="https://www.instagram.com/rg.card" target="_blank">Instagram</a>
-        <a href="tel:+33764021268">Nous appeler</a>
-    </div>
-</div>
+          <a class="btn btn-outline" href="mailto:rg.businesscard@gmail.com">
+            ✉️ Envoyer un mail
+          </a>
+        </div>
+      </section>
 
+      <!-- Localisation -->
+      <section class="map-block">
+        <div class="map-header">
+          <h2 class="map-title">Localisation</h2>
+          <div class="map-pill"><span class="map-dot"></span> Carte interactive</div>
+        </div>
+        <p class="map-hint">
+          Explorez la carte librement : zoom, déplacement, mode plan ou satellite.
+        </p>
+        <div class="map-outer">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2682.832981234083!2d0.679300176654427!3d47.39005060401601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47fcd6b7fce5dd97%3A0x85c02a1bce97e612!2s3%20Rue%20Rappin%2C%2037000%20Tours!5e0!3m2!1sfr!2sfr!4v1731070652000!5m2!1sfr!2sfr"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </section>
+    </div>
+  </main>
 </body>
 </html>
